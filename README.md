@@ -2,6 +2,10 @@
 
 A lightweight, Google Calendar-style weekly scheduler built with plain HTML, CSS and JavaScript. No frameworks, no build step, no notification system.
 
+## 🌐 Live Website
+> [!NOTE]
+> View the live website on [Weekly Planner](https://sakib-ar.github.io/Week-Planner/).
+
 ## Files
 
 | File | Purpose |
