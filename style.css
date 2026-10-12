@@ -25,11 +25,13 @@ body{background:var(--bg);color:var(--ink);font:400 14px/1.4 "DM Sans",system-ui
 .bar h1{font-size:20px;font-weight:700;margin:0 8px 0 0;letter-spacing:-.01em}
 .range{font-size:16px;font-weight:500;min-width:170px}
 button{font:inherit;color:inherit;cursor:pointer}
-.btn{border:1px solid var(--line);background:var(--panel);padding:6px 12px;border-radius:8px}
+.btn{border:1px solid var(--line);background:var(--panel);padding:6px 12px;border-radius:8px; display:inline-block;}
 .btn:hover{background:var(--today)}
 .btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:500}
 .btn.danger{color:var(--danger)}
-.nav{display:flex;gap:6px}
+.btn.primary-danger{background:var(--danger);color:#fff;border-color:var(--danger);font-weight:500}
+.btn.primary-danger:hover{background:#9f1c11} /* Slightly darker red on hover */
+.nav{display:flex;gap:6px;align-items:center}
 .spacer{flex:1}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
@@ -59,9 +61,15 @@ button{font:inherit;color:inherit;cursor:pointer}
 .ev.short{display:flex;gap:6px;align-items:baseline}
 .ev.short b{display:inline}
 
-/* ---------- dialog ---------- */
+/* ---------- dialogs ---------- */
 dialog{border:1px solid var(--line);border-radius:14px;padding:0;width:min(400px,calc(100vw - 32px));background:var(--panel);color:var(--ink)}
 dialog::backdrop{background:rgba(10,12,18,.45)}
+dialog[open] { animation: smoothOpen 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes smoothOpen {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
 form{display:grid;gap:14px;padding:20px}
 form h2{margin:0;font-size:17px}
 label{display:grid;gap:4px;font-size:12px;color:var(--muted)}
@@ -76,3 +84,9 @@ input[type=text],input[type=date],input[type=time]{font:inherit;color:var(--ink)
 .err{color:var(--danger);min-height:18px;font-size:13px;margin:0}
 .actions{display:flex;gap:8px;justify-content:flex-end}
 .actions .del{margin-right:auto}
+.actions.center-actions{justify-content:center; margin-top: 8px;}
+
+/* Custom Reset Warning */
+.warning-dlg{border: 2px solid var(--danger);}
+.warning-dlg p{margin:0; color:var(--muted); text-align:center; line-height:1.5;}
+.danger-text{color:var(--danger) !important; text-align:center; font-size:20px !important;}
