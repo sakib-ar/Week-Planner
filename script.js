@@ -131,7 +131,7 @@
     n.style.top = ((d.getHours()*60 + d.getMinutes())/60*HOUR) + 'px';
   }
 
-  /* ---------- dialog ---------- */
+  /* ---------- Event Dialog ---------- */
   var dlg = $('dlg');
 
   (function buildSwatches(){
@@ -177,8 +177,7 @@
       data.id = 'e' + Date.now() + Math.random().toString(36).slice(2,6);
       events.push(data);
     }
-    save();
-    // jump to the week that holds the saved event
+    save(); 
     var p = $('f-date').value.split('-');
     weekStart = startOfWeek(new Date(+p[0], +p[1]-1, +p[2]));
     dlg.close(); render();
@@ -187,10 +186,16 @@
   $('cancel').addEventListener('click', function(){ dlg.close(); });
   $('del').addEventListener('click', function(){
     events = events.filter(function(ev){ return ev.id !== editingId; });
-    save(); dlg.close(); render();
+    save(); 
+    dlg.close(); render();
   });
 
-  /* ---------- navigation ---------- */
+  // Close event dialog when clicking on the blurred backdrop
+  dlg.addEventListener('click', function(e){
+    if (e.target === dlg) dlg.close();
+  });
+
+  /* ---------- Navigation & Actions ---------- */
   $('prev').addEventListener('click', function(){ weekStart = addDays(weekStart,-7); render(); });
   $('next').addEventListener('click', function(){ weekStart = addDays(weekStart,7);  render(); });
   $('today').addEventListener('click', function(){ weekStart = startOfWeek(new Date()); render(); });
@@ -199,8 +204,66 @@
     openDialog({date:key(now), start:start, end:start+60});
   });
 
+  // Download functionality
+  $('download').addEventListener('click', function() {
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(events, null, 2));
+    var a = document.createElement('a');
+    a.setAttribute("href", dataStr);
+    a.setAttribute("download", "routine-planner.json");
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  });
+
+  // Import functionality
+  $('import').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(evt) {
+      try {
+        var parsed = JSON.parse(evt.target.result);
+        if (Array.isArray(parsed)) {
+          events = parsed;
+          save(); 
+          render();
+        } else {
+          alert('Invalid file format: Expected a JSON array.');
+        }
+      } catch (err) {
+        alert('Error parsing JSON file.');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = ''; 
+  });
+
+  /* ---------- Reset Warning Dialog ---------- */
+  var resetDlg = $('resetDlg');
+  
+  $('reset').addEventListener('click', function() {
+    resetDlg.showModal();
+  });
+
+  $('resetCancel').addEventListener('click', function() {
+    resetDlg.close();
+  });
+
+  $('resetForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    events = [];
+    save(); 
+    render();
+    resetDlg.close();
+  });
+
+  // Close reset dialog when clicking on the blurred backdrop
+  resetDlg.addEventListener('click', function(e){
+    if (e.target === resetDlg) resetDlg.close();
+  });
+
   /* ---------- go ---------- */
   render();
-  $('scroller').scrollTop = 7*HOUR - 8;          // open around 7 AM
+  $('scroller').scrollTop = 7*HOUR - 8;          
   setInterval(placeNow, 60000);
 })();
