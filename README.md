@@ -8,7 +8,7 @@ A lightweight, Google Calendar-style weekly scheduler built with plain HTML, CSS
 |---|---|
 | `index.html` | Page structure: top bar, calendar container, event dialog |
 | `style.css` | Layout, colours, light/dark themes, event blocks, dialog |
-| `script.js` | Rendering, event logic, navigation, storage |
+| `script.js` | Rendering, event logic, navigation, storage, data management |
 
 To run it, put the three files in one folder and open `index.html` in a browser.
 
@@ -58,7 +58,10 @@ To run it, put the three files in one folder and open `index.html` in a browser.
 
 ## Data and storage
 
-- Events persist in the browser's `localStorage`, so they survive a refresh.
+- **AutoSave:** Every change (add, edit, delete, import, reset) is immediately persisted to the browser's `localStorage` automatically, meaning progress will never disappear on refresh.
+- **Download JSON:** Click the "Download" button to export all events as a `.json` backup.
+- **Import JSON:** Restore a downloaded routine by clicking "Import" and selecting a valid planner `.json` file.
+- **Reset Progress:** Clear all active events via the "Reset" button (requires user confirmation).
 - All storage calls are wrapped in `try/catch`. If storage is unavailable, the app still works for the current session.
 - Each event is a plain object:
 
@@ -71,29 +74,3 @@ To run it, put the three files in one folder and open `index.html` in a browser.
   end: 690,             // minutes from midnight (11:30)
   color: "#0f766e"
 }
-```
-
-## Appearance and accessibility
-
-- **Light and dark themes** follow the system setting (`prefers-color-scheme`) using CSS variables.
-- **Responsive:** the grid keeps a minimum width of 760 px and scrolls horizontally on narrow screens. The page respects device safe-area insets.
-- **Keyboard friendly:** visible focus outlines, events are real buttons, and `Esc` closes the dialog.
-- **Font:** DM Sans from Google Fonts, falling back to the system font if offline.
-
-## Customisation points
-
-| What | Where |
-|---|---|
-| Hour row height | `HOUR` in `script.js` **and** `--hour` in `style.css` (keep them equal) |
-| Event colours | `COLORS` array in `script.js` |
-| Theme colours | CSS variables at the top of `style.css` |
-| Storage key | `STORE` in `script.js` |
-| Replace local storage with a backend | `load()` and `save()` in `script.js` |
-
-## Not included (by design or for later)
-
-- Notifications and reminders
-- Drag to move or resize events
-- Month and day views
-- Recurring events
-- Multiple calendars and sharing
