@@ -18,6 +18,13 @@
   </div>
   <div class="range" id="range"></div>
   <div class="spacer"></div>
+  <div class="nav">
+    <button class="btn" id="download" aria-label="Download Routine">Download</button>
+    <label class="btn" style="cursor:pointer" aria-label="Import Routine">
+      Import <input type="file" id="import" accept=".json" style="display:none">
+    </label>
+    <button class="btn danger" id="reset" aria-label="Reset All Progress">Reset</button>
+  </div>
   <button class="btn primary" id="add">New event</button>
 </header>
 
@@ -28,6 +35,7 @@
   </div>
 </main>
 
+<!-- Event Dialog -->
 <dialog id="dlg">
   <form id="form">
     <h2 id="dlgTitle">New event</h2>
@@ -43,6 +51,18 @@
       <button type="button" class="btn danger del" id="del">Delete</button>
       <button type="button" class="btn" id="cancel">Cancel</button>
       <button type="submit" class="btn primary">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Reset Warning Dialog -->
+<dialog id="resetDlg" class="warning-dlg">
+  <form id="resetForm">
+    <h2 class="danger-text">⚠️ Reset Planner?</h2>
+    <p>Are you sure you want to delete all your events? This action cannot be undone.</p>
+    <div class="actions center-actions">
+      <button type="button" class="btn" id="resetCancel">Cancel</button>
+      <button type="submit" class="btn danger primary-danger">Yes, Reset All</button>
     </div>
   </form>
 </dialog>
