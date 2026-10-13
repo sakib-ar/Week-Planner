@@ -6,16 +6,6 @@ A lightweight, Google Calendar-style weekly scheduler built with plain HTML, CSS
 > [!NOTE]
 > View the live website on [Weekly Planner](https://sakib-ar.github.io/Week-Planner/).
 
-## Files
-
-| File | Purpose |
-|---|---|
-| `index.html` | Page structure: top bar, calendar container, event dialog |
-| `style.css` | Layout, colours, light/dark themes, event blocks, dialog |
-| `script.js` | Rendering, event logic, navigation, storage, data management |
-
-To run it, put the three files in one folder and open `index.html` in a browser.
-
 ## Calendar view
 
 - **Week layout:** 7 day columns, always starting on **Sunday** and ending on Saturday.
