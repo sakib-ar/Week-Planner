@@ -364,6 +364,7 @@
     if (e.target === resetDlg) resetDlg.close();
   });
 
+  
   /* ---------- go ---------- */
   render();
   $('scroller').scrollTop = 7*HOUR - 8;          
