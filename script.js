@@ -1,6 +1,6 @@
 (function(){
   var HOUR = 48;                       // keep equal to --hour in CSS
-  var COLORS = ['#60A5FA','#A78BFA','#34D399','#FBBF24','#FB7185'];
+  var COLORS = ['#3B82D6','#8B5FD9','#16A34A','#D99A12','#E84D72'];
   var STORE = 'week-planner-events';
   var DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
