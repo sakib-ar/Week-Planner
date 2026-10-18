@@ -1,70 +1,69 @@
-# Week Planner: Features
+# Weekly Routine Planner: Features
 
-A lightweight, Google Calendar-style weekly scheduler built with plain HTML, CSS and JavaScript. No frameworks, no build step, no notification system.
+A lightweight, generic weekday scheduler built with plain HTML, CSS, and JavaScript. Designed strictly as a repeating schedule (Sunday to Saturday) rather than a date-bound calendar, making it perfect for plotting out classes, shifts, workouts, or recurring personal routines.
 
 ## 🌐 Live Website
 > [!NOTE]
 > View the live website on [Weekly Planner](https://sakib-ar.github.io/Week-Planner/).
 
-## Calendar view
+## Calendar View
 
-- **Week layout:** 7 day columns, always starting on **Sunday** and ending on Saturday.
-- **24-hour grid:** each hour is 48 px tall, with faint hour lines and time labels (1 AM to 11 PM) in a left gutter.
-- **Sticky day header:** weekday name and date number stay visible while scrolling vertically.
-- **Today highlight:** today's date is shown in an accent-coloured circle and its column has a tinted background.
-- **Week range label:** shows the visible range, for example `Oct 11 – 17, 2026`. It includes both months when the week spans two.
-- **Current-time line:** a red line with a dot marks the current time in today's column and updates every minute.
-- **Auto-scroll:** the view opens scrolled to about 7 AM.
+- **Week Layout:** 7 day columns, fixed from Sunday to Saturday. Generic day-of-week model ensures schedules repeat continuously without dates expiring.
+- **24-Hour Grid:** Each hour is 48px tall, complete with faint hour division lines and time labels (1 AM to 11 PM) in a sticky left gutter.
+- **Current Day Highlight:** Today's column features a distinct accent header and a subtle background tint.
+- **Real-Time Line Indicator:** A red indicator line with a tracking node marks the current time in today's column and automatically updates every minute.
+- **Auto-Scroll:** Page automatically scrolls to 7 AM on initial load for optimal viewport positioning.
 
-## Navigation
+## Creating Events
 
-- **Previous week** and **Next week** buttons.
-- **Today** button, which jumps back to the current week.
-- After saving an event, the view jumps to the week that contains it.
+- **Click Any Time Slot:** Clicking an empty space inside a day column opens the event creation modal.
+  - The clicked position automatically snaps to the nearest 30-minute interval.
+  - Start time pre-fills based on click position; end time defaults to one hour later (capped at 11:59 PM).
+- **New Event Button:** Top bar primary button opens the event dialog for the current day starting at the next full hour.
+- **Event Form Fields:**
+  - **Title:** Optional (up to 80 characters; displays as "(No title)" if omitted).
+  - **Day of Week:** Selector dropdown ranging from Sunday (`0`) to Saturday (`6`).
+  - **Start & End Time:** Precise time inputs.
+  - **Color Picker Options:** 5 default preset swatches plus a user-defined custom color wheel picker and uppercase Hex text input (`#RRGGBB`).
+- **Validation:** Enforces that end time must occur strictly after start time, displaying clear error messages for invalid ranges.
 
-## Creating events
+## Color Picker & Custom Swatches
 
-- **Click any empty slot** in a day column to open the event dialog.
-  - The click position snaps to the nearest 30 minutes.
-  - Start time is prefilled with the clicked slot and end time defaults to one hour later (capped at 11:59 PM).
-- **New event button** in the top bar opens the dialog for today, starting at the next full hour.
-- **Event dialog fields:**
-  - Title (optional, up to 80 characters; shown as "(No title)" if left empty)
-  - Date
-  - Start time
-  - End time
-  - Colour (5 choices)
-- **Validation:** the date is required and the end time must be after the start time, otherwise an error message appears in the dialog.
+- **Preset Swatches:** Includes default accent shades (teal, indigo, amber, rose, slate).
+- **Spectrum Color Picker:** Clicking the rainbow swatch launches the native system color picker.
+- **Hex Input Box:** Text field supporting 3-character (`#FFF`) and 6-character (`#FFFFFF`) hex color codes. Automatically strips hashes, sanitizes non-hex characters, and updates the active swatch in real time.
 
-## Event blocks
+## Event Blocks & Layout
 
-- **Sized by duration:** a block's top position and height come from its start and end time (minimum height 18 px).
-- **Shows details:** title plus a formatted time range, such as `1:30 PM – 3 PM`.
-- **Compact layout for short events:** blocks under 40 px tall show the title and time on one line.
-- **Overlap handling:** events that overlap in time sit side by side in the same column, splitting the width evenly.
-- **Colour coding:** teal, indigo, amber, rose or slate.
+- **Dynamic Sizing:** Event block height and vertical placement directly match duration (1 hour = 48px, minimum height 18px).
+- **Block Info:** Displays event title along with formatted start/end times (e.g., `1:30 PM – 3:00 PM`).
+- **Compact View:** Short event blocks (under 40px tall) render title and timestamps inline on a single row.
+- **Overlap Column Layout:** Overlapping events dynamically divide column width and render side-by-side without visual collision.
 
-## Editing and deleting
+## Editing & Deleting
 
-- Click an existing block to open the dialog with its details filled in.
-- Change any field and press **Save**, or press **Delete** to remove the event.
-- **Cancel** closes the dialog without changes.
+- Click any existing event card to edit its title, day, time range, or assigned color.
+- Save updates instantly, or hit **Delete** to remove the event.
+- Includes smooth animated modal popups supporting backdrop clicks to dismiss.
 
-## Data and storage
+## Data & Storage
 
-- **AutoSave:** Every change (add, edit, delete, import, reset) is immediately persisted to the browser's `localStorage` automatically, meaning progress will never disappear on refresh.
-- **Download JSON:** Click the "Download" button to export all events as a `.json` backup.
-- **Import JSON:** Restore a downloaded routine by clicking "Import" and selecting a valid planner `.json` file.
-- **Reset Progress:** Clear all active events via the "Reset" button (requires user confirmation).
-- All storage calls are wrapped in `try/catch`. If storage is unavailable, the app still works for the current session.
-- Each event is a plain object:
+- **AutoSave:** All creations, edits, deletions, imports, and resets instantly persist to browser `localStorage` (`week-planner-events`).
+- **JSON Download:** Export complete weekly routine schedules to a formatted `.json` backup file.
+- **JSON Import:** Restore routines from external JSON files via file upload.
+- **Data Migration Engine:** Automatically converts legacy date-bound events (`YYYY-MM-DD`) into the day-of-week integer model (`0`–`6`) upon load or import.
+- **Safety Reset:** Clear all active events via the Reset button, guarded by a confirmation modal dialog.
 
-```js
-{
-  id: "e1760000000000ab12",
-  title: "Study group",
-  date: "2026-10-14",   // YYYY-MM-DD
-  start: 600,           // minutes from midnight (10:00)
-  end: 690,             // minutes from midnight (11:30)
-  color: "#0f766e"
-}
+### Data Structure Example
+
+```json
+[
+  {
+    "id": "e1760000000000ab12",
+    "title": "EEE101 Class",
+    "day": 1,
+    "start": 420,
+    "end": 510,
+    "color": "#0F766E"
+  }
+]
