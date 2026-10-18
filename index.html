@@ -1,76 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Weekly Routine Planner</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Weekly Routine Planner</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="bar">
-  <h1>Weekly Routine</h1>
-  <div class="spacer"></div>
-  <div class="nav">
-    <button class="btn" id="download" aria-label="Download Routine">Download</button>
-    <label class="btn" style="cursor:pointer" aria-label="Import Routine">
-      Import <input type="file" id="import" accept=".json" style="display:none">
-    </label>
-    <button class="btn danger" id="reset" aria-label="Reset All Progress">Reset</button>
-  </div>
-  <button class="btn primary" id="add">New event</button>
-</header>
-
-<main class="scroller" id="scroller">
-  <div class="cal">
-    <div class="row head" id="head"></div>
-    <div class="row" id="body"></div>
-  </div>
-</main>
-
-<!-- Event Dialog -->
-<dialog id="dlg">
-  <form id="form">
-    <h2 id="dlgTitle">New event</h2>
-    <label>Title<input type="text" id="f-title" placeholder="Add a title" maxlength="80"></label>
-    <label>Day
-      <select id="f-day" required>
-        <option value="0">Sunday</option>
-        <option value="1">Monday</option>
-        <option value="2">Tuesday</option>
-        <option value="3">Wednesday</option>
-        <option value="4">Thursday</option>
-        <option value="5">Friday</option>
-        <option value="6">Saturday</option>
-      </select>
-    </label>
-    <div class="two">
-      <label>Start time<input type="time" id="f-start" required></label>
-      <label>End time<input type="time" id="f-end" required></label>
+  <header class="bar">
+    <h1>Weekly Routine</h1>
+    <div class="spacer"></div>
+    <div class="nav">
+      <button class="btn" id="download" aria-label="Download Routine">Download</button>
+      <label class="btn" style="cursor:pointer" aria-label="Import Routine">
+        Import <input type="file" id="import" accept=".json" style="display:none">
+      </label>
+      <button class="btn danger" id="reset" aria-label="Reset All Progress">Reset</button>
     </div>
-    <div class="swatches" id="swatches" role="radiogroup" aria-label="Colour"></div>
-    <p class="err" id="err" role="alert"></p>
-    <div class="actions">
-      <button type="button" class="btn danger del" id="del">Delete</button>
-      <button type="button" class="btn" id="cancel">Cancel</button>
-      <button type="submit" class="btn primary">Save</button>
-    </div>
-  </form>
-</dialog>
+    <button class="btn primary" id="add">New event</button>
+  </header>
 
-<!-- Reset Warning Dialog -->
-<dialog id="resetDlg" class="warning-dlg">
-  <form id="resetForm">
-    <h2 class="danger-text">⚠️ Reset Planner?</h2>
-    <p>Are you sure you want to delete all your events? This action cannot be undone.</p>
-    <div class="actions center-actions">
-      <button type="button" class="btn" id="resetCancel">Cancel</button>
-      <button type="submit" class="btn danger primary-danger">Yes, Reset All</button>
+  <main class="scroller" id="scroller">
+    <div class="cal">
+      <div class="row head" id="head"></div>
+      <div class="row" id="body"></div>
     </div>
-  </form>
-</dialog>
+  </main>
 
-<script src="script.js"></script>
+  <!-- Event Dialog -->
+  <dialog id="dlg">
+    <form id="form">
+      <h2 id="dlgTitle">New event</h2>
+      <label>Title<input type="text" id="f-title" placeholder="Add a title" maxlength="80"></label>
+      <label>Day
+        <select id="f-day" required>
+          <option value="0">Sunday</option>
+          <option value="1">Monday</option>
+          <option value="2">Tuesday</option>
+          <option value="3">Wednesday</option>
+          <option value="4">Thursday</option>
+          <option value="5">Friday</option>
+          <option value="6">Saturday</option>
+        </select>
+      </label>
+      <div class="two">
+        <label>Start time<input type="time" id="f-start" required></label>
+        <label>End time<input type="time" id="f-end" required></label>
+      </div>
+      <div class="swatches" id="swatches" role="radiogroup" aria-label="Colour"></div>
+      <p class="err" id="err" role="alert"></p>
+      <div class="actions">
+        <button type="button" class="btn danger del" id="del">Delete</button>
+        <button type="button" class="btn" id="cancel">Cancel</button>
+        <button type="submit" class="btn primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Reset Warning Dialog -->
+  <dialog id="resetDlg" class="warning-dlg">
+    <form id="resetForm">
+      <h2 class="danger-text">⚠️ Reset Planner?</h2>
+      <p>Are you sure you want to delete all your events? This action cannot be undone.</p>
+      <div class="actions center-actions">
+        <button type="button" class="btn" id="resetCancel">Cancel</button>
+        <button type="submit" class="btn danger primary-danger">Yes, Reset All</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
 </body>
 </html>
